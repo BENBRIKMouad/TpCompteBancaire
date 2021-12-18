@@ -10,11 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author benbrik_mouad
  */
+@NamedQuery(name = "CompteBancaire.findAll", query = "select c from CompteBancaire c")
 @Entity
 public class CompteBancaire implements Serializable {
 
