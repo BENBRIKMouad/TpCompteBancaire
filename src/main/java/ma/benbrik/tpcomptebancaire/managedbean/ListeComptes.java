@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.faces.view.ViewScoped;
 import ma.benbrik.tpcomptebancaire.ejb.GestionnaireCompte;
 import ma.benbrik.tpcomptebancaire.entities.CompteBancaire;
 
@@ -18,7 +19,7 @@ import ma.benbrik.tpcomptebancaire.entities.CompteBancaire;
  * @author benbrik_mouad
  */
 @Named(value = "listeComptes")
-@Dependent
+@ViewScoped
 public class ListeComptes implements Serializable{
 private List<CompteBancaire> customerList; 
     
@@ -35,5 +36,9 @@ private List<CompteBancaire> customerList;
             customerList = gestionnaireCompte.getAllComptes();
         return customerList;
     }
-    
+    public String supprimer(CompteBancaire compte) {
+        gestionnaireCompte.supprimer(compte);
+        Util.addFlashInfoMessage("Compte de " + compte.getNom() + " supprimé");
+  return "listeComptes?faces-redirect=true";
+  }
 }

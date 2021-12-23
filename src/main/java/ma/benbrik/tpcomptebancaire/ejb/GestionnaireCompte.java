@@ -7,6 +7,7 @@ package ma.benbrik.tpcomptebancaire.ejb;
 
 import java.util.List;
 import javax.annotation.sql.DataSourceDefinition;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,16 +39,52 @@ public class GestionnaireCompte {
     // "Insert Code > Add Business Method")
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
-    
+
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
-    } 
-    public List<CompteBancaire> getAllComptes() {
-     Query query = em.createNamedQuery("CompteBancaire.findAll");
-       return query.getResultList();
     }
+
+    public List<CompteBancaire> getAllComptes() {
+        Query query = em.createNamedQuery("CompteBancaire.findAll");
+        return query.getResultList();
+    }
+
+    public CompteBancaire getCompteBancaire(Long idcmpt) {
+        return em.find(CompteBancaire.class, idcmpt);
+    }
+
+    public CompteBancaire update(CompteBancaire cmptB) {
+        return em.merge(cmptB);
+    }
+
+    public CompteBancaire findById(Long id) {
+        return em.find(CompteBancaire.class, id);
+    }
+
+    public void deposer(CompteBancaire compteBancaire, int montant) {
+        compteBancaire.deposer(montant);
+        update(compteBancaire);
+    }
+
+    public void retirer(CompteBancaire compteBancaire, int montant) {
+        compteBancaire.retirer(montant);
+        update(compteBancaire);
+    }
+
+    public void supprimer(CompteBancaire compte) {
+        em.remove(em.merge(compte));
+    }
+
     public long nbComptes() {
-    TypedQuery<Long> query = em.createQuery("select count(c) from CompteBancaire c", Long.class);
-    return query.getSingleResult();
-  }
+        TypedQuery<Long> query = em.createQuery("select count(c) from CompteBancaire c", Long.class);
+        return query.getSingleResult();
+    }
+
+    public void transfert(CompteBancaire src, CompteBancaire dest, int mnt) {
+        src.retirer(mnt);
+        dest.deposer(mnt);
+        update(src);
+        update(dest);
+    }
+
 }
