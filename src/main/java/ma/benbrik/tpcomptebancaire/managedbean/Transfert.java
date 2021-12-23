@@ -53,7 +53,7 @@ public class Transfert implements Serializable {
         if (dest == null) {
             Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destination");
         }
-        if (src.getSolde() <= mnt) {
+        if (src != null && src.getSolde() <= mnt) {
             Util.messageErreur("Montant insuffisant !", "Montant insuffisant  !", "form:montant");
         }
         return null;
@@ -75,7 +75,7 @@ public class Transfert implements Serializable {
         }else{
             Util.messageErreur("compte de M/Mme " + dest.getNom() +"avec un solde de " + dest.getSolde(), "compte existe !", "form:destination");
         }
-        if (src.getSolde() <= mnt) {
+        if (src != null && src.getSolde() <= mnt){
             Util.messageErreur("Montant insuffisant le maximum et "+src.getSolde()+" !", "Montant insuffisant  !", "form:montant");
         }else {
              Util.messageErreur("Montant est suffisant por cette transaction !", "Montant suffisant  !", "form:montant");

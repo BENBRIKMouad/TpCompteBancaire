@@ -8,20 +8,16 @@
     <body>
 
         <ui:composition template="./WEB-INF/templates/template.xhtml">
-
             <ui:define name="metadata">
                 <f:metadata>
                     <f:viewParam name="id" value="#{compteDetail.idCompte}" required="true"/>
                     <f:viewAction action="#{compteDetail.loadCompteBancaire()}"/>
                 </f:metadata>
             </ui:define>
-
             <ui:define name="top">
                 detail du compte #{compteDetail.idCompte} de M/Mme #{compteDetail.compteBanquaire.nom}
             </ui:define>
-
             <ui:define name="content">
-
                 <f:view>
                     <h:form>
                         <h1><h:outputText value="Create/Edit"/></h1>

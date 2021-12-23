@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import ma.benbrik.tpcomptebancaire.entities.CompteBancaire;
+import ma.benbrik.tpcomptebancaire.entities.OperationBancaire;
 
 /**
  *
