@@ -13,28 +13,46 @@
             </ui:define>
             <ui:define name="content">
                 <f:view>
+                    <h:link value="ajouter compte" outcome="ajouter"/>
                     <h:form>
-                      
-                        <p:dataTable value="#{listeComptes.allCustomers}" var="item">
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Id"/>
-                                </f:facet>
-                                <h:outputText value="#{item.id}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Nom"/>
-                                </f:facet>
-                                <h:outputText value="#{item.nom}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Solde"/>
-                                </f:facet>
-                                <h:outputText value="#{item.solde}"/>
-                            </p:column>
-                        </p:dataTable>
+                        <p:panelGrid  id="forautowidth" columns="1">
+                            <p:dataTable value="#{listeComptes.allCustomers}" var="item" tableStyle="width:auto" >
+                                <p:column width="40">
+                                    <f:facet name="header">
+                                        <h:outputText value="Id"/>
+                                    </f:facet>
+                                    <h:link value="#{item.id}" outcome="transaction?id=#{item.id}"/>
+                                </p:column>
+                                <p:column width="300" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Nom"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.nom}"/>
+                                </p:column>
+                                <p:column style="text-align:right;" width="60">
+                                    <f:facet name="header">
+                                        <h:outputText value="Solde"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.solde}">
+                                        <f:convertNumber pattern="###,###,##0"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column width="40">
+                                    <f:facet name="header">
+                                        <h:outputText value="Supprimer"/>
+                                    </f:facet>
+                                    <h:commandLink action="#{listeComptes.supprimer(item)}"
+                                                   title="Supprimer le compte de #{item.nom}" value=' supprimer'/>
+                                </p:column>
+                                <p:column width="120">
+                                    <f:facet name="header">
+                                        <h:outputText value="modifier nom"/>
+                                    </f:facet>
+                                     <h:link value="modifier nom" outcome="compteDetail?id=#{item.id}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panelGrid>
+
                     </h:form>
                 </f:view>
             </ui:define>
